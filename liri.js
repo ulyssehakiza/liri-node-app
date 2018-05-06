@@ -116,3 +116,35 @@ request('http://www.omdbapi.com/?apikey=995d01b&t=' + movieName, function (error
 
 
 break;
+case "do-what-it-says":
+
+fs.readFile('random.txt', 'utf8', function (err, data) {
+    if (err) throw err;
+    var dataArr = data.split(",");
+    argument = dataArr[0];
+    songName = dataArr[1];
+    console.log(argument);
+    console.log(songName);
+
+    spotifyClient.search({ type: "track", query: songName }, function (error, data) {
+        if (error) {
+            console.log('Error occurred: ' + error);
+        }
+        var songs = data.tracks.items;
+        for (var i = 0; i < songs.length; i++) {
+            console.log(i);
+            console.log("Song Name: " + songs[i].name);
+            console.log('Artist(s): ' + songs[i].artists.map(function (artist) {
+                return artist.name;
+            }));
+            console.log('Preview Song Here: ' + songs[i].preview_url);
+            console.log("Album: " + songs[i].album.name);
+        }
+    });
+
+});
+
+
+break;
+
+};
