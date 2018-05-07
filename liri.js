@@ -6,12 +6,12 @@ var spotify = require ("spotify");
 var twitter = require ("twitter");
 var request = require ("request");
 var fs = require ("fs");
+var spotifyclient = new spotify (keys.spotify);
+var twitterclient = new twitter(keys.twitter);
 var liriArgument = process.argv[2];
-var sClient = new Spotify(keys.spotify);
-var tClient = new Twitter(keys.twitter);
 var songName = "";
 var movieName = "";
-var params = { screen_name: '', count: 20 };
+var params = { screen_name: 'Super18Eddy', count: 20 };
 
 // switch command for liri app
 
@@ -22,31 +22,38 @@ switch(liriArgument) {
     case "spotify-this-song" : spotifyThisSong(); break;
     case "movie-this" : movieThis(); break;
     case "do-what-it-says" : dowhatItsays(); break;
-    default: console.log("==welcome to liri-app:==\n" + "\n mytweet'Super18Eddy'" + "\n spotifyThisSong 'I Want it That Way'"+ "\n movieThis'Mr Bond'" + "\n do-what-it-says."+"\n\n")
-}
+    default: console.log("==welcome to liri-app:==\n" + "\n mytweet'Super18Eddy'" + "\n spotifyThisSong 'I Want it That Way'"+ "\n movieThis'Mr Bond'" + "\n do-what-it-says."+"\n\n");
+
 
 //========================================
 //twitter function & API
 
-var Twitter = require('twitter');
+    var Twitter = require('twitter');
 
-var tClient = new Twitter({
-    consumer_key: 'h5SNatQrcmbMcyN72lW4yMk0A',
-    consumer_secret: 'HCebEakTWCT8o4ApMN0FCdufafatnQv73nnP58g6Wqgfz7vidf',
-    access_token_key: '993203778588307456-jpMMztwomOpW5zRiCVDWOybgrreAKg2',
-    access_token_secret: '0zJ7BR92pCbt96MIkmOWi6sxMScaMyGNOGKezrmto19se'
-});
+        var client = new Twitter({
+            consumer_key: process.env.TWITTER_CONSUMER_KEY,
+            consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+            access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+            access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+        });
 
-var params = { screen_name: 'Super18Eddy', count:20};
-client.get('statuses/user_timeline', params, function (error, tweets, response) {
-    if (!error) {
-        console.log(tweets);
-    }
-});
+    var params = { screen_name: 'Super18Eddy', count: 20 };
+    tclient.get('statuses/user_timeline', params, function (error, tweets, response) {
+        if (!error) {
+            for (var i = 0; i < tweets.length; i++) {
+                console.log(tweets[i].text);
+                console.log(tweets[i].created_at);
+                console.log('');
 
-// Spotify call
+            }
+        }
+    });
 
-    case "spotify-this-song" : spotifyThisSong ()
+
+
+// Spotify function call
+
+    case "spotify-this-song" : 
 
 if (process.argv.length === 3) {
 
@@ -93,7 +100,7 @@ if (process.argv.length === 3) {
 
 break;
 
-    // OMDB call using request
+    // OMDB function call using request
 
     case "movie-this":
 
